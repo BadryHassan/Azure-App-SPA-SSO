@@ -5,6 +5,7 @@ const cardDiv = document.getElementById("card-div");
 const mailButton = document.getElementById("readMail");
 const profileButton = document.getElementById("seeProfile");
 const profileDiv = document.getElementById("profile-div");
+const profilePhotoDiv = document.getElementById("photo"); //profile-photo-div
 const groupsButton = document.getElementById("seeGroups");
 const groupDiv = document.getElementById("group-div");
 
@@ -17,11 +18,23 @@ function showWelcomeMessage(username) {
   signInButton.innerHTML = "Sign Out";
 }
 
-function updateUI(data, endpoint) {
+
+async function getMePhoto(data, endpoint) {
+  console.log(data)
+  const imageUrl = await profilePhoto();
+  console.log(imageUrl);
+  return imageUrl;
+}
+
+async function updateUI(data, endpoint) {
   console.log('Graph API responded at: ' + new Date().toString());
 
   if (endpoint === graphConfig.graphMeEndpoint) {
-    profileDiv.innerHTML = ''
+    profileDiv.innerHTML = '';
+    const photo = document.createElement('img');
+    photo.src = await getMePhoto();
+    photo.style = "border-radius: 50%; " + "border - style: solid; " + "border - width: 5px; " + "height: 150px; " + "width: 150px; ";
+
     const title = document.createElement('p');
     title.innerHTML = "<strong>Title: </strong>" + data.jobTitle;
     const email = document.createElement('p');
@@ -30,20 +43,28 @@ function updateUI(data, endpoint) {
     phone.innerHTML = "<strong>Phone: </strong>" + data.businessPhones[0];
     const address = document.createElement('p');
     address.innerHTML = "<strong>Location: </strong>" + data.officeLocation;
+    profileDiv.appendChild(photo);
     profileDiv.appendChild(title);
     profileDiv.appendChild(email);
     profileDiv.appendChild(phone);
     profileDiv.appendChild(address);
 
+  } else if (endpoint === graphConfig.graphMyProfilePhoto) {
+    profilePhotoDiv.innerHTML = '';
+    const photo = document.createElement('img');
+    photo.src = showProfilePhoto();
+    profilePhotoDiv.appendChild(photo);
+
   } else if (endpoint === graphConfig.graphGroupMembers) {
     groupDiv.innerHTML = ''
-    const groupMembersCount = data.value.length;
     const groupMember = document.createElement('ol');
     for (let x in data.value) {
       groupMember.innerHTML += "<li> <strong>Name: </strong>"
         + data.value[x].displayName
         + "<br> <strong>Mail: </strong>"
-        + data.value[x].mail + "<br> <strong>Job Title: </strong>" + data.value[x].jobTitle
+        + data.value[x].mail
+        + "<br> <strong>Job Title: </strong>"
+        + data.value[x].jobTitle
         + "<br> <br> </li>"
         ;
       groupDiv.appendChild(groupMember);
