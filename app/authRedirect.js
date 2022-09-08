@@ -114,3 +114,13 @@ function seeGroups() {
       console.error(error);
     });
 }
+
+function profilePhoto() {
+  return getTokenPopup(tokenRequest)
+    .then(response => {
+      return callMSGraph(graphConfig.graphMyProfilePhoto, response.accessToken, updateUI);
+    }).catch(error => {
+      console.error(error);
+    });
+
+}

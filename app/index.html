@@ -39,7 +39,7 @@
   </nav>
   <br>
   <h5 class="card-header text-center">Vanilla JavaScript SPA calling MS Graph
-    API with MSAL.js</h5>
+    APIs with MSAL.js</h5>
   <br>
   <div class="row" style="margin:auto">
     <div id="card-div" class="col-md-3" style="display:none">
@@ -49,18 +49,29 @@
             profile and read your mails</h5>
           <div id="profile-div"></div>
           <br>
-          <br>
+          <!-- <button class="btn btn-primary" id="seeProfile"
+            onclick="seeProfile(); showProfilePhoto() ;">See 
+            Profile</button> -->
           <button class="btn btn-primary" id="seeProfile"
-            onclick="seeProfile()">See Profile</button>
+            onclick="seeProfile(); getMePhoto() ;">See
+            Profile</button>
           <br>
           <br>
-          <div id="group-div"></div>
+          <div id="profile-photo-div"></div>
+          <button class="btn btn-primary" id="profilePhoto"
+            onclick="profilePhoto()">See Profile Photo</button>
+          <br>
+          <br>
+          <div id="group-div">
+          </div>
           <button class="btn btn-primary" id="seeGroups"
-            onclick="seeGroups()">See Groups</button>
+            onclick="seeGroups()">See
+            Groups</button>
           <br>
           <br>
           <button class="btn btn-primary" id="readMail"
-            onclick="readMail()">Read Mails</button>
+            onclick="readMail()">Read
+            Mails</button>
         </div>
       </div>
     </div>

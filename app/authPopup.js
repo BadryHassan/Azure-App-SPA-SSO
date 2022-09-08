@@ -121,4 +121,14 @@ function seeGroups() {
     });
 }
 
+function profilePhoto() {
+  return getTokenPopup(tokenRequest)
+    .then(response => {
+      return callMSGraphProfilePhoto(graphConfig.graphMyProfilePhoto, response.accessToken, getMePhoto);
+    }).catch(error => {
+      console.error(error);
+    });
+
+}
+
 selectAccount();
